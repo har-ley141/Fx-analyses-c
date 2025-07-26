@@ -125,14 +125,15 @@ class FXAnalyzer:
 
     def _safe_float(self, value, default=0.0):
         """Safely convert pandas Series or scalar to float"""
-        if pd.isna(value):
-            return default
         try:
+            if value is None:
+                return default
             if hasattr(value, 'item'):
-                return float(value.item())
+                val = value.item()
+                return float(val) if not pd.isna(val) else default
             else:
-                return float(value)
-        except (ValueError, TypeError):
+                return float(value) if not pd.isna(value) else default
+        except (ValueError, TypeError, AttributeError):
             return default
 
     def generate_trade_signal(self, df: pd.DataFrame) -> Tuple[str, float, Dict]:
