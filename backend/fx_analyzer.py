@@ -146,9 +146,11 @@ class FXAnalyzer:
             macd = latest.get('MACD', 0)
             macd_signal = latest.get('MACD_signal', 0)
             if pd.notna(macd) and pd.notna(macd_signal):
-                if macd > macd_signal and macd > 0:
+                macd_val = float(macd) if hasattr(macd, 'item') else float(macd)
+                macd_signal_val = float(macd_signal) if hasattr(macd_signal, 'item') else float(macd_signal)
+                if macd_val > macd_signal_val and macd_val > 0:
                     signals.append(('BUY', 0.2, 'MACD bullish crossover'))
-                elif macd < macd_signal and macd < 0:
+                elif macd_val < macd_signal_val and macd_val < 0:
                     signals.append(('SELL', 0.2, 'MACD bearish crossover'))
             
             # Moving Average Signal
