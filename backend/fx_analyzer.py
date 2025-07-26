@@ -162,9 +162,9 @@ class FXAnalyzer:
                 close_val = float(close) if hasattr(close, 'item') else float(close)
                 ma50_val = float(ma50) if hasattr(ma50, 'item') else float(ma50)
                 ma200_val = float(ma200) if hasattr(ma200, 'item') else float(ma200)
-                if close_val > ma50_val > ma200_val:
+                if close_val > ma50_val and ma50_val > ma200_val:
                     signals.append(('BUY', 0.2, 'Price above MAs'))
-                elif close_val < ma50_val < ma200_val:
+                elif close_val < ma50_val and ma50_val < ma200_val:
                     signals.append(('SELL', 0.2, 'Price below MAs'))
             
             # Combine signals
@@ -174,13 +174,13 @@ class FXAnalyzer:
             if len(buy_signals) > len(sell_signals):
                 confidence = min(0.8, sum(s[1] for s in buy_signals))
                 reasons = [s[2] for s in buy_signals]
-                return "BUY", confidence, {"reasons": reasons, "rsi": rsi, "macd": macd}
+                return "BUY", confidence, {"reasons": reasons, "rsi": float(rsi) if pd.notna(rsi) else 50, "macd": float(macd) if pd.notna(macd) else 0}
             elif len(sell_signals) > len(buy_signals):
                 confidence = min(0.8, sum(s[1] for s in sell_signals))
                 reasons = [s[2] for s in sell_signals]
-                return "SELL", confidence, {"reasons": reasons, "rsi": rsi, "macd": macd}
+                return "SELL", confidence, {"reasons": reasons, "rsi": float(rsi) if pd.notna(rsi) else 50, "macd": float(macd) if pd.notna(macd) else 0}
             else:
-                return "HOLD", 0.4, {"reasons": ["Mixed signals"], "rsi": rsi, "macd": macd}
+                return "HOLD", 0.4, {"reasons": ["Mixed signals"], "rsi": float(rsi) if pd.notna(rsi) else 50, "macd": float(macd) if pd.notna(macd) else 0}
                 
         except Exception as e:
             logger.error(f"Error generating trade signal: {e}")
