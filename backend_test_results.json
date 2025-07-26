@@ -1,0 +1,70 @@
+{
+  "api_endpoints": {
+    "root_endpoint": {
+      "success": true,
+      "details": "API root accessible",
+      "timestamp": "2025-07-26T14:44:24.218068"
+    },
+    "supported_pairs": {
+      "success": true,
+      "details": "Found 8 pairs",
+      "timestamp": "2025-07-26T14:44:24.275208"
+    },
+    "fx_news": {
+      "success": true,
+      "details": "Headlines: 6, Sentiment: 0.000",
+      "timestamp": "2025-07-26T14:44:24.969702"
+    },
+    "fx_history": {
+      "success": true,
+      "details": "Retrieved 0 historical records",
+      "timestamp": "2025-07-26T14:44:24.987713"
+    },
+    "fx_history_filtered": {
+      "success": true,
+      "details": "Filtered history works",
+      "timestamp": "2025-07-26T14:44:25.017307"
+    },
+    "fx_analyze_EURUSD=X_1h_7d": {
+      "success": false,
+      "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
+      "timestamp": "2025-07-26T14:44:27.041918"
+    },
+    "fx_analyze_EURUSD=X_4h_7d": {
+      "success": false,
+      "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
+      "timestamp": "2025-07-26T14:44:28.380751"
+    },
+    "fx_analyze_GBPUSD=X_1h_7d": {
+      "success": false,
+      "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
+      "timestamp": "2025-07-26T14:44:29.993870"
+    },
+    "fx_analyze_GBPUSD=X_4h_7d": {
+      "success": false,
+      "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
+      "timestamp": "2025-07-26T14:44:31.487357"
+    }
+  },
+  "fx_analysis_engine": {
+    "complete_analysis": {
+      "success": false,
+      "details": "Only 0/4 tests passed",
+      "timestamp": "2025-07-26T14:44:31.487641"
+    },
+    "invalid_pair_handling": {
+      "success": true,
+      "details": "Handled invalid pair gracefully",
+      "timestamp": "2025-07-26T14:44:32.356632"
+    },
+    "invalid_interval_handling": {
+      "success": true,
+      "details": "Handled invalid interval",
+      "timestamp": "2025-07-26T14:44:32.692673"
+    }
+  },
+  "technical_indicators": {},
+  "news_sentiment": {},
+  "chart_generation": {},
+  "errors": []
+}
