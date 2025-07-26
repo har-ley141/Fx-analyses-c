@@ -3,63 +3,111 @@
     "root_endpoint": {
       "success": true,
       "details": "API root accessible",
-      "timestamp": "2025-07-26T15:00:41.453932"
+      "timestamp": "2025-07-26T15:05:00.066885"
     },
     "supported_pairs": {
       "success": true,
       "details": "Found 8 pairs",
-      "timestamp": "2025-07-26T15:00:41.473840"
+      "timestamp": "2025-07-26T15:05:00.083086"
     },
     "fx_news": {
-      "success": false,
-      "details": "Exception: HTTPSConnectionPool(host='7167c4a0-d769-46da-b520-d400fbd4594c.preview.emergentagent.com', port=443): Read timed out. (read timeout=15)",
-      "timestamp": "2025-07-26T15:00:56.555194"
+      "success": true,
+      "details": "Headlines: 6, Sentiment: -0.104",
+      "timestamp": "2025-07-26T15:05:06.361243"
     },
     "fx_history": {
       "success": false,
       "details": "Status: 500",
-      "timestamp": "2025-07-26T15:00:56.764916"
+      "timestamp": "2025-07-26T15:05:06.402738"
     },
     "fx_analyze_EURUSD=X_1h_7d": {
-      "success": false,
-      "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
-      "timestamp": "2025-07-26T15:01:03.766634"
+      "success": true,
+      "details": "Signal: HOLD, Confidence: 0.400",
+      "timestamp": "2025-07-26T15:05:13.720509"
     },
     "fx_analyze_EURUSD=X_4h_7d": {
-      "success": false,
-      "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
-      "timestamp": "2025-07-26T15:01:09.207664"
+      "success": true,
+      "details": "Signal: HOLD, Confidence: 0.400",
+      "timestamp": "2025-07-26T15:05:20.899386"
     },
     "fx_analyze_GBPUSD=X_1h_7d": {
-      "success": false,
-      "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
-      "timestamp": "2025-07-26T15:01:14.032217"
+      "success": true,
+      "details": "Signal: BUY, Confidence: 0.240",
+      "timestamp": "2025-07-26T15:05:28.391917"
     },
     "fx_analyze_GBPUSD=X_4h_7d": {
-      "success": false,
-      "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
-      "timestamp": "2025-07-26T15:01:18.502409"
+      "success": true,
+      "details": "Signal: HOLD, Confidence: 0.400",
+      "timestamp": "2025-07-26T15:05:35.659462"
     }
   },
   "fx_analysis_engine": {
     "complete_analysis": {
-      "success": false,
-      "details": "Only 0/4 tests passed",
-      "timestamp": "2025-07-26T15:01:18.502688"
+      "success": true,
+      "details": "All 4 analysis tests passed",
+      "timestamp": "2025-07-26T15:05:35.660322"
     },
     "invalid_pair_handling": {
       "success": true,
       "details": "Handled invalid pair gracefully",
-      "timestamp": "2025-07-26T15:01:19.586616"
+      "timestamp": "2025-07-26T15:05:36.737627"
     },
     "invalid_interval_handling": {
       "success": true,
       "details": "Handled invalid interval",
-      "timestamp": "2025-07-26T15:01:19.922569"
+      "timestamp": "2025-07-26T15:05:37.015355"
     }
   },
-  "technical_indicators": {},
-  "news_sentiment": {},
-  "chart_generation": {},
+  "technical_indicators": {
+    "rsi_calculation": {
+      "success": true,
+      "details": "RSI: 17.63",
+      "timestamp": "2025-07-26T15:05:35.659787"
+    },
+    "macd_calculation": {
+      "success": true,
+      "details": "MACD: -0.0012",
+      "timestamp": "2025-07-26T15:05:35.659814"
+    },
+    "moving_averages": {
+      "success": false,
+      "details": "Invalid MAs - MA50: 0, MA200: 0",
+      "timestamp": "2025-07-26T15:05:35.659823"
+    },
+    "signal_generation": {
+      "success": true,
+      "details": "Signal: HOLD, Confidence: 0.4",
+      "timestamp": "2025-07-26T15:05:35.659831"
+    }
+  },
+  "news_sentiment": {
+    "sentiment_score": {
+      "success": true,
+      "details": "Score: -0.10392163197199504",
+      "timestamp": "2025-07-26T15:05:35.659839"
+    },
+    "sentiment_counts": {
+      "success": true,
+      "details": "Total: 6, Pos: 0, Neg: 1",
+      "timestamp": "2025-07-26T15:05:35.659850"
+    },
+    "news_headlines": {
+      "success": true,
+      "details": "Headlines: 5",
+      "timestamp": "2025-07-26T15:05:35.659870"
+    }
+  },
+  "chart_generation": {
+    "base64_chart": {
+      "success": true,
+      "details": "Chart size: 106015 bytes",
+      "timestamp": "2025-07-26T15:05:35.660296"
+    },
+    "png_format": {
+      "success": true,
+      "details": "Valid PNG format",
+      "timestamp": "2025-07-26T15:05:35.660314"
+    }
+  },
   "errors": []
 }
