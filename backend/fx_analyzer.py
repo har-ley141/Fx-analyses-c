@@ -147,36 +147,35 @@ class FXAnalyzer:
             
             # RSI Signal
             rsi = latest.get('RSI', 50)
-            if pd.notna(rsi):
-                rsi_val = float(rsi) if hasattr(rsi, 'item') else float(rsi)
-                if rsi_val < 30:
-                    signals.append(('BUY', 0.3, 'RSI oversold'))
-                elif rsi_val > 70:
-                    signals.append(('SELL', 0.3, 'RSI overbought'))
+            rsi_val = self._safe_float(rsi, 50)
+            if rsi_val < 30:
+                signals.append(('BUY', 0.3, 'RSI oversold'))
+            elif rsi_val > 70:
+                signals.append(('SELL', 0.3, 'RSI overbought'))
             
             # MACD Signal
             macd = latest.get('MACD', 0)
             macd_signal = latest.get('MACD_signal', 0)
-            if pd.notna(macd) and pd.notna(macd_signal):
-                macd_val = float(macd) if hasattr(macd, 'item') else float(macd)
-                macd_signal_val = float(macd_signal) if hasattr(macd_signal, 'item') else float(macd_signal)
-                if macd_val > macd_signal_val and macd_val > 0:
-                    signals.append(('BUY', 0.2, 'MACD bullish crossover'))
-                elif macd_val < macd_signal_val and macd_val < 0:
-                    signals.append(('SELL', 0.2, 'MACD bearish crossover'))
+            macd_val = self._safe_float(macd, 0)
+            macd_signal_val = self._safe_float(macd_signal, 0)
+            if macd_val > macd_signal_val and macd_val > 0:
+                signals.append(('BUY', 0.2, 'MACD bullish crossover'))
+            elif macd_val < macd_signal_val and macd_val < 0:
+                signals.append(('SELL', 0.2, 'MACD bearish crossover'))
             
             # Moving Average Signal
             close = latest.get('Close', 0)
             ma50 = latest.get('MA50')
             ma200 = latest.get('MA200')
             
-            if pd.notna(ma50) and pd.notna(ma200) and pd.notna(close):
-                close_val = float(close) if hasattr(close, 'item') else float(close)
-                ma50_val = float(ma50) if hasattr(ma50, 'item') else float(ma50)
-                ma200_val = float(ma200) if hasattr(ma200, 'item') else float(ma200)
-                if close_val > 0 and close_val > ma50_val and ma50_val > ma200_val:
+            close_val = self._safe_float(close, 0)
+            ma50_val = self._safe_float(ma50, 0)
+            ma200_val = self._safe_float(ma200, 0)
+            
+            if close_val > 0 and ma50_val > 0 and ma200_val > 0:
+                if close_val > ma50_val and ma50_val > ma200_val:
                     signals.append(('BUY', 0.2, 'Price above MAs'))
-                elif close_val > 0 and close_val < ma50_val and ma50_val < ma200_val:
+                elif close_val < ma50_val and ma50_val < ma200_val:
                     signals.append(('SELL', 0.2, 'Price below MAs'))
             
             # Combine signals
