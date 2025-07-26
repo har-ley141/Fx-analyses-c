@@ -123,6 +123,18 @@ class FXAnalyzer:
             logger.error(f"Error applying technical indicators: {e}")
             return df
 
+    def _safe_float(self, value, default=0.0):
+        """Safely convert pandas Series or scalar to float"""
+        if pd.isna(value):
+            return default
+        try:
+            if hasattr(value, 'item'):
+                return float(value.item())
+            else:
+                return float(value)
+        except (ValueError, TypeError):
+            return default
+
     def generate_trade_signal(self, df: pd.DataFrame) -> Tuple[str, float, Dict]:
         """Generate trading signal based on technical analysis"""
         try:
