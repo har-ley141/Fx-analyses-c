@@ -3,64 +3,59 @@
     "root_endpoint": {
       "success": true,
       "details": "API root accessible",
-      "timestamp": "2025-07-26T14:44:24.218068"
+      "timestamp": "2025-07-26T15:00:41.453932"
     },
     "supported_pairs": {
       "success": true,
       "details": "Found 8 pairs",
-      "timestamp": "2025-07-26T14:44:24.275208"
+      "timestamp": "2025-07-26T15:00:41.473840"
     },
     "fx_news": {
-      "success": true,
-      "details": "Headlines: 6, Sentiment: 0.000",
-      "timestamp": "2025-07-26T14:44:24.969702"
+      "success": false,
+      "details": "Exception: HTTPSConnectionPool(host='7167c4a0-d769-46da-b520-d400fbd4594c.preview.emergentagent.com', port=443): Read timed out. (read timeout=15)",
+      "timestamp": "2025-07-26T15:00:56.555194"
     },
     "fx_history": {
-      "success": true,
-      "details": "Retrieved 0 historical records",
-      "timestamp": "2025-07-26T14:44:24.987713"
-    },
-    "fx_history_filtered": {
-      "success": true,
-      "details": "Filtered history works",
-      "timestamp": "2025-07-26T14:44:25.017307"
+      "success": false,
+      "details": "Status: 500",
+      "timestamp": "2025-07-26T15:00:56.764916"
     },
     "fx_analyze_EURUSD=X_1h_7d": {
       "success": false,
       "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
-      "timestamp": "2025-07-26T14:44:27.041918"
+      "timestamp": "2025-07-26T15:01:03.766634"
     },
     "fx_analyze_EURUSD=X_4h_7d": {
       "success": false,
       "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
-      "timestamp": "2025-07-26T14:44:28.380751"
+      "timestamp": "2025-07-26T15:01:09.207664"
     },
     "fx_analyze_GBPUSD=X_1h_7d": {
       "success": false,
       "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
-      "timestamp": "2025-07-26T14:44:29.993870"
+      "timestamp": "2025-07-26T15:01:14.032217"
     },
     "fx_analyze_GBPUSD=X_4h_7d": {
       "success": false,
       "details": "Missing fields: ['technical_analysis', 'sentiment_analysis', 'chart']",
-      "timestamp": "2025-07-26T14:44:31.487357"
+      "timestamp": "2025-07-26T15:01:18.502409"
     }
   },
   "fx_analysis_engine": {
     "complete_analysis": {
       "success": false,
       "details": "Only 0/4 tests passed",
-      "timestamp": "2025-07-26T14:44:31.487641"
+      "timestamp": "2025-07-26T15:01:18.502688"
     },
     "invalid_pair_handling": {
       "success": true,
       "details": "Handled invalid pair gracefully",
-      "timestamp": "2025-07-26T14:44:32.356632"
+      "timestamp": "2025-07-26T15:01:19.586616"
     },
     "invalid_interval_handling": {
       "success": true,
       "details": "Handled invalid interval",
-      "timestamp": "2025-07-26T14:44:32.692673"
+      "timestamp": "2025-07-26T15:01:19.922569"
     }
   },
   "technical_indicators": {},
