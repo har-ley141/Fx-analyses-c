@@ -185,18 +185,12 @@ class FXAnalyzer:
             if len(buy_signals) > len(sell_signals):
                 confidence = min(0.8, sum(s[1] for s in buy_signals))
                 reasons = [s[2] for s in buy_signals]
-                rsi_val = float(rsi) if pd.notna(rsi) and hasattr(rsi, 'item') else (float(rsi) if pd.notna(rsi) else 50)
-                macd_val = float(macd) if pd.notna(macd) and hasattr(macd, 'item') else (float(macd) if pd.notna(macd) else 0)
                 return "BUY", confidence, {"reasons": reasons, "rsi": rsi_val, "macd": macd_val}
             elif len(sell_signals) > len(buy_signals):
                 confidence = min(0.8, sum(s[1] for s in sell_signals))
                 reasons = [s[2] for s in sell_signals]
-                rsi_val = float(rsi) if pd.notna(rsi) and hasattr(rsi, 'item') else (float(rsi) if pd.notna(rsi) else 50)
-                macd_val = float(macd) if pd.notna(macd) and hasattr(macd, 'item') else (float(macd) if pd.notna(macd) else 0)
                 return "SELL", confidence, {"reasons": reasons, "rsi": rsi_val, "macd": macd_val}
             else:
-                rsi_val = float(rsi) if pd.notna(rsi) and hasattr(rsi, 'item') else (float(rsi) if pd.notna(rsi) else 50)
-                macd_val = float(macd) if pd.notna(macd) and hasattr(macd, 'item') else (float(macd) if pd.notna(macd) else 0)
                 return "HOLD", 0.4, {"reasons": ["Mixed signals"], "rsi": rsi_val, "macd": macd_val}
                 
         except Exception as e:
