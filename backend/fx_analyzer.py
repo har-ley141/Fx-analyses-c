@@ -136,9 +136,10 @@ class FXAnalyzer:
             # RSI Signal
             rsi = latest.get('RSI', 50)
             if pd.notna(rsi):
-                if rsi < 30:
+                rsi_val = float(rsi) if hasattr(rsi, 'item') else float(rsi)
+                if rsi_val < 30:
                     signals.append(('BUY', 0.3, 'RSI oversold'))
-                elif rsi > 70:
+                elif rsi_val > 70:
                     signals.append(('SELL', 0.3, 'RSI overbought'))
             
             # MACD Signal
