@@ -159,9 +159,12 @@ class FXAnalyzer:
             ma200 = latest.get('MA200')
             
             if pd.notna(ma50) and pd.notna(ma200) and close > 0:
-                if close > ma50 > ma200:
+                close_val = float(close) if hasattr(close, 'item') else float(close)
+                ma50_val = float(ma50) if hasattr(ma50, 'item') else float(ma50)
+                ma200_val = float(ma200) if hasattr(ma200, 'item') else float(ma200)
+                if close_val > ma50_val > ma200_val:
                     signals.append(('BUY', 0.2, 'Price above MAs'))
-                elif close < ma50 < ma200:
+                elif close_val < ma50_val < ma200_val:
                     signals.append(('SELL', 0.2, 'Price below MAs'))
             
             # Combine signals
