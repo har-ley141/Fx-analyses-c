@@ -436,11 +436,11 @@ class FXAnalyzer:
                     "confidence": round(tech_conf, 3),
                     "details": tech_details,
                     "indicators": {
-                        "rsi": round(latest.get('RSI', 0), 2) if pd.notna(latest.get('RSI')) else 0,
-                        "macd": round(latest.get('MACD', 0), 4) if pd.notna(latest.get('MACD')) else 0,
-                        "close_price": round(latest.get('Close', 0), 5),
-                        "ma50": round(latest.get('MA50', 0), 5) if pd.notna(latest.get('MA50')) else 0,
-                        "ma200": round(latest.get('MA200', 0), 5) if pd.notna(latest.get('MA200')) else 0
+                        "rsi": round(self._safe_float(latest.get('RSI', 0), 0), 2),
+                        "macd": round(self._safe_float(latest.get('MACD', 0), 0), 4),
+                        "close_price": round(self._safe_float(latest.get('Close', 0), 0), 5),
+                        "ma50": round(self._safe_float(latest.get('MA50', 0), 0), 5),
+                        "ma200": round(self._safe_float(latest.get('MA200', 0), 0), 5)
                     }
                 },
                 "sentiment_analysis": sentiment_data,
