@@ -1,0 +1,24 @@
+Looking in indexes: https://pypi.org/simple, https://d33sy5i8bnduwe.cloudfront.net/simple/
+Collecting torch
+  Using cached torch-2.7.1-cp311-cp311-manylinux_2_28_aarch64.whl.metadata (29 kB)
+Requirement already satisfied: filelock in /root/.venv/lib/python3.11/site-packages (from torch) (3.18.0)
+Requirement already satisfied: typing-extensions>=4.10.0 in /usr/local/lib/python3.11/site-packages (from torch) (4.14.1)
+Collecting sympy>=1.13.3 (from torch)
+  Using cached sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx (from torch)
+  Using cached networkx-3.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting jinja2 (from torch)
+  Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Requirement already satisfied: fsspec in /root/.venv/lib/python3.11/site-packages (from torch) (2025.7.0)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch)
+  Using cached mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch)
+  Using cached MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (4.0 kB)
+Using cached torch-2.7.1-cp311-cp311-manylinux_2_28_aarch64.whl (99.1 MB)
+Using cached sympy-1.14.0-py3-none-any.whl (6.3 MB)
+Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Using cached networkx-3.5-py3-none-any.whl (2.0 MB)
+Using cached MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (23 kB)
+Using cached mpmath-1.3.0-py3-none-any.whl (536 kB)
+Installing collected packages: mpmath, sympy, networkx, MarkupSafe, jinja2, torch
+Successfully installed MarkupSafe-3.0.2 jinja2-3.1.6 mpmath-1.3.0 networkx-3.5 sympy-1.14.0 torch-2.7.1
