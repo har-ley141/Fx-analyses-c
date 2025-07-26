@@ -1,6 +1,6 @@
 import yfinance as yf
 import pandas as pd
-import pandas_ta as ta
+import numpy as np
 from transformers import pipeline
 from newsapi import NewsApiClient
 import matplotlib.pyplot as plt
@@ -33,6 +33,43 @@ class FXAnalyzer:
                 self.sentiment_analyzer = pipeline("sentiment-analysis")
         return self.sentiment_analyzer
 
+    def calculate_rsi(self, prices: pd.Series, period: int = 14) -> pd.Series:
+        """Calculate RSI (Relative Strength Index)"""
+        delta = prices.diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+        rs = gain / loss
+        return 100 - (100 / (1 + rs))
+
+    def calculate_macd(self, prices: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9) -> Dict:
+        """Calculate MACD indicators"""
+        ema_fast = prices.ewm(span=fast).mean()
+        ema_slow = prices.ewm(span=slow).mean()
+        macd = ema_fast - ema_slow
+        macd_signal = macd.ewm(span=signal).mean()
+        macd_histogram = macd - macd_signal
+        return {
+            'MACD': macd,
+            'MACD_signal': macd_signal,
+            'MACD_histogram': macd_histogram
+        }
+
+    def calculate_sma(self, prices: pd.Series, period: int) -> pd.Series:
+        """Calculate Simple Moving Average"""
+        return prices.rolling(window=period).mean()
+
+    def calculate_bollinger_bands(self, prices: pd.Series, period: int = 20, std_dev: int = 2) -> Dict:
+        """Calculate Bollinger Bands"""
+        sma = self.calculate_sma(prices, period)
+        std = prices.rolling(window=period).std()
+        upper_band = sma + (std * std_dev)
+        lower_band = sma - (std * std_dev)
+        return {
+            'BB_upper': upper_band,
+            'BB_middle': sma,
+            'BB_lower': lower_band
+        }
+
     async def fetch_chart_data(self, pair: str, interval: str, period: str = "7d") -> pd.DataFrame:
         """Fetch forex chart data using yfinance"""
         try:
@@ -57,34 +94,28 @@ class FXAnalyzer:
             raise
 
     def apply_technical_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Apply technical indicators using pandas-ta"""
+        """Apply technical indicators using custom calculations"""
         try:
             df_copy = df.copy()
             
             # RSI
-            df_copy['RSI'] = ta.rsi(df_copy['Close'], length=14)
+            df_copy['RSI'] = self.calculate_rsi(df_copy['Close'])
             
             # MACD
-            macd_data = ta.macd(df_copy['Close'])
-            if macd_data is not None and not macd_data.empty:
-                df_copy['MACD'] = macd_data.iloc[:, 0]  # MACD line
-                df_copy['MACD_signal'] = macd_data.iloc[:, 1]  # Signal line
-                df_copy['MACD_histogram'] = macd_data.iloc[:, 2]  # Histogram
-            else:
-                df_copy['MACD'] = 0
-                df_copy['MACD_signal'] = 0
-                df_copy['MACD_histogram'] = 0
+            macd_data = self.calculate_macd(df_copy['Close'])
+            df_copy['MACD'] = macd_data['MACD']
+            df_copy['MACD_signal'] = macd_data['MACD_signal']
+            df_copy['MACD_histogram'] = macd_data['MACD_histogram']
             
             # Moving Averages
-            df_copy['MA50'] = ta.sma(df_copy['Close'], length=50)
-            df_copy['MA200'] = ta.sma(df_copy['Close'], length=200)
+            df_copy['MA50'] = self.calculate_sma(df_copy['Close'], 50)
+            df_copy['MA200'] = self.calculate_sma(df_copy['Close'], 200)
             
             # Bollinger Bands
-            bb_data = ta.bbands(df_copy['Close'])
-            if bb_data is not None and not bb_data.empty:
-                df_copy['BB_upper'] = bb_data.iloc[:, 0]
-                df_copy['BB_middle'] = bb_data.iloc[:, 1]
-                df_copy['BB_lower'] = bb_data.iloc[:, 2]
+            bb_data = self.calculate_bollinger_bands(df_copy['Close'])
+            df_copy['BB_upper'] = bb_data['BB_upper']
+            df_copy['BB_middle'] = bb_data['BB_middle']
+            df_copy['BB_lower'] = bb_data['BB_lower']
             
             return df_copy
             
