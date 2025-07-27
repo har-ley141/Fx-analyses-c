@@ -1,9 +1,19 @@
 # Fx-analyses-c
+
+## Directory Structure
+
+```
 backend/src/fx-analyzer-api/
 │
-├── main.py             # The FastAPI backend (from above)
+├── main.py             # The FastAPI backend
+├── fx_analyzer.py      # Main analysis script (see below)
 ├── requirements.txt    # Dependencies
 └── .render.yaml        # Render configuration
+```
+
+## Render Service Example
+
+```yaml
 services:
   - type: web
     name: fx-analyzer-api
@@ -12,11 +22,26 @@ services:
     startCommand: "uvicorn main:app --host 0.0.0.0 --port 10000"
     envVars:
       - key: NEWS_API_KEY
-        value: your_newsapi_key_here
+        fromEnvVar: NEWS_API_KEY
+```
+
+## Usage
+
+- Make sure to set your `NEWS_API_KEY` as an environment variable.
+- Run the script:  
+  ```bash
+  python fx_analyzer.py
+  ```
+
+## Python Analysis Script Example
+
+```python
 # fx_analyzer.py
+
+import os
 import yfinance as yf
 import pandas as pd
-import talib
+import finta
 from transformers import pipeline
 from newsapi import NewsApiClient
 import matplotlib.pyplot as plt
@@ -25,7 +50,7 @@ import matplotlib.pyplot as plt
 PAIR = "EURUSD=X"
 INTERVAL = "1h"
 NEWS_KEYWORDS = ["EURUSD", "ECB", "Federal Reserve", "interest rates"]
-NEWS_API_KEY = "your_newsapi_key_here"
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")  # Use env variable!
 N_CANDLES = 100
 
 # ========== TECHNICAL ANALYSIS ==========
@@ -34,10 +59,10 @@ def fetch_chart_data(pair, interval, period="7d"):
     return data
 
 def apply_technical_indicators(df):
-    df["RSI"] = talib.RSI(df["Close"])
-    df["MACD"], _, _ = talib.MACD(df["Close"])
-    df["MA50"] = talib.SMA(df["Close"], timeperiod=50)
-    df["MA200"] = talib.SMA(df["Close"], timeperiod=200)
+    df["RSI"] = finta.RSI(df["Close"])
+    df["MACD"], _, _ = finta.MACD(df["Close"])
+    df["MA50"] = finta.SMA(df["Close"], timeperiod=50)
+    df["MA200"] = finta.SMA(df["Close"], timeperiod=200)
     return df
 
 def generate_trade_signal(df):
@@ -50,12 +75,16 @@ def generate_trade_signal(df):
 
 # ========== NEWS SENTIMENT ANALYSIS ==========
 def fetch_news():
+    if not NEWS_API_KEY:
+        raise ValueError("NEWS_API_KEY not set in environment variables.")
     newsapi = NewsApiClient(api_key=NEWS_API_KEY)
     headlines = []
     for kw in NEWS_KEYWORDS:
         articles = newsapi.get_everything(q=kw, language='en', sort_by='publishedAt', page_size=5)
-        for article in articles['articles']:
-            headlines.append(article['title'] + " - " + article['description'])
+        for article in articles.get('articles', []):
+            title = article.get('title', '')
+            description = article.get('description') or ''
+            headlines.append(f"{title} - {description}".strip())
     return headlines
 
 def analyze_sentiment(texts):
@@ -63,7 +92,9 @@ def analyze_sentiment(texts):
     results = classifier(texts)
     scores = {"POSITIVE": 0, "NEGATIVE": 0}
     for result in results:
-        scores[result["label"]] += result["score"]
+        label = result["label"].upper()
+        if label in scores:
+            scores[label] += result["score"]
     sentiment_score = scores["POSITIVE"] - scores["NEGATIVE"]
     return sentiment_score
 
@@ -97,3 +128,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
+
+## Requirements
+
+```txt
+fastapi
+uvicorn
+yfinance
+pandas
+transformers
+torch
+newsapi-python
+finta
+```
